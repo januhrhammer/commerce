@@ -3,8 +3,7 @@
 {% block body %}
 
 {% for category in categories %}
-{{ category }}
-
+<a href="/category/{{ category }}">{{ category }}</a>
 {% endfor %}
 
 {% endblock %}
