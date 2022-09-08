@@ -3,5 +3,12 @@
 {% block body %}
 
 {{ auction.item_name }}
+{{ auction.starting_price}}
 
+
+
+<form action="" method="POST">{% csrf_token%}
+{{ bidform.as_p }}
+<input type="submit">
+</form>
 {% endblock %}

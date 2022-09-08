@@ -1,3 +1,4 @@
+from typing import List
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,8 +8,10 @@ from django.forms import ModelForm
 from .models import User, Listing, Bid, Category, Comment, Watchlist
 
 
-# INDEX PAGE
 def index(request):
+    """
+    View: Passing all active auctions to index.html
+    """
     active_listings = Listing.objects.all().filter(active=True)
     return render(
         request,
@@ -17,7 +20,6 @@ def index(request):
     )
 
 
-# LOGIN; LOGOUT; REGISTER
 def login_view(request):
     if request.method == "POST":
 
@@ -74,15 +76,18 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-# CATEGORY LIST AND VIEW
-# Renders the category overview and passes list of categories to the html
 def category_view(request):
+    """
+    View: Passes all categories to categories.html
+    """
     categories = Category.objects.all()
     return render(request, "auctions/categories.html", {"categories": categories})
 
 
-# Renders page with all active auctions for specific category
 def category_list(request, category):
+    """
+    View: Passes all auctions per category to the category specific html
+    """
     try:
         category_name = Category.objects.get(category=category)
         auctions = Listing.objects.all().filter(category=category_name)
@@ -93,18 +98,23 @@ def category_list(request, category):
     )
 
 
-# Tries to render the specific auction by pk/id, on exception renders an error page
 def auction_view(request, pk):
+    """
+    View: Passes all auction details to the auction specific html
+    """
     try:
         auction = Listing.objects.get(pk=pk)
     except:
         return render(request, "auctions/no_auction.html")
 
-    return render(request, "auctions/auction.html", {"auction": auction, "pk": pk})
+    return render(request, "auctions/auction.html", {"auction": auction, "pk": pk, "bidform": BidForm()})
 
 
-# Defines Form for new auction listing
 class AuctionForm(ModelForm):
+    """
+    Form: Create new auction listing
+    """
+
     class Meta:
         model = Listing
         fields = [
@@ -117,8 +127,10 @@ class AuctionForm(ModelForm):
         ]
 
 
-# Renders the new listing page with form. When form is submitted, the auction page gets opened
 def new_listing(request):
+    """
+    View: Passes the form to the new_listing.html. If form is submitted, create new auction and render auction page
+    """
     form = AuctionForm(request.POST)
     if form.is_valid():
         new_listing = form.save(
@@ -132,3 +144,14 @@ def new_listing(request):
 
     else:
         return render(request, "auctions/new_listing.html", {"form": form})
+
+
+class BidForm(ModelForm):
+    class Meta:
+        model = Bid
+        fields = ["bid_amount"]
+
+# def bid_view(request, pk):
+#     form = BidForm(request.POST)
+#     if form.is_valid():
+   

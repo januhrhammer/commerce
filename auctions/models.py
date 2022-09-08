@@ -21,8 +21,8 @@ class Listing(models.Model):
     starting_price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0.01)]) 
     image = models.ImageField(upload_to="", blank=True, default="noimage.svg.png")
     image_url = models.URLField(blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="listing")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listing")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="listings")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -31,8 +31,8 @@ class Listing(models.Model):
 
 class Bid(models.Model):
     bid_amount = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0.01)])
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bid")
-    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bid")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
+    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bids")
 
     def __str__(self):
         return f"${self.bid_amount} for {self.auction} by {self.user}"
@@ -41,17 +41,17 @@ class Bid(models.Model):
 class Comment(models.Model):
     comment = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment")
-    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comment")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
+    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="comments")
 
     def __str__(self):
         return f"Comment on {self.auction} by {self.user}"
 
 
 class Watchlist(models.Model):
-    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlist")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+    auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="watchlists")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlists")
 
     def __str__(self):
         return f"{self.auction} watched by {self.user}"
-
+        
