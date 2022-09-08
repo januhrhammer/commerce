@@ -1,10 +1,10 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>{{ title }}</h2>
+    <h2></h2>
 
     {% for auction in auctions %}
-    <a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>
+    {{ auction.item_name }}
     ${{ auction.starting_price }}
 <img src="{{auction.image.url}}" alt="">
     {% endfor %}

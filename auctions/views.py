@@ -7,6 +7,7 @@ from django.forms import ModelForm
 from .models import User, Listing, Bid, Category, Comment, Watchlist
 
 
+#INDEX PAGE
 def index(request):
     active_listings = Listing.objects.all().filter(active=True)
     return render(
@@ -15,7 +16,7 @@ def index(request):
         {"auctions": active_listings, "title": "Active Auctions"},
     )
 
-
+#LOGIN; LOGOUT; REGISTER
 def login_view(request):
     if request.method == "POST":
 
@@ -71,10 +72,23 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+# CATEGORY LIST AND VIEW 
 # Renders the category overview and passes all categories to the html
 def category_view(request):
     categories = Category.objects.all()
     return render(request, "auctions/categories.html", {"categories": categories})
+
+########## NOT FUNCTIONAL, IDK WHY YET
+def category_list(request, category):
+    try:
+        auctions = Listing.objects.all().filter(active=True, category=category)
+    except:
+        return render(request, "auctions/no_auction.html")
+    return render(request, "auctions/category.html", {
+        "auctions": auctions,
+        "category": category
+
+    } )
 
 
 # Tries to render the specific auction by pk/id, on exception renders an error page
