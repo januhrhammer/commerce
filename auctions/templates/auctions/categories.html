@@ -3,7 +3,7 @@
 {% block body %}
 
 {% for category in categories %}
-<a href="/category/{{ category }}">{{ category }}</a>
+<a href="{% url 'category' category  %}">{{ category }}</a>
 {% endfor %}
 
 {% endblock %}
