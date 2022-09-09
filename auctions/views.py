@@ -194,3 +194,4 @@ def make_bid(request, pk):
 
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
+
