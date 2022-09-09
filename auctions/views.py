@@ -163,19 +163,21 @@ def make_bid(request, pk):
         user = request.user
         bid = bidform.save(commit=False)
         starting_bid = auction.starting_price
-        current_bids = Bid.objects.filter(auction=auction)
+        current_bids = Bid.objects.all().filter(auction=auction)
 
-        if current_bids == True:
+        check_start = bid.bid_amount >= starting_bid
+        def check_current():
             for current_bid in current_bids:
-                if bid.bid_amount <= current_bid.bid_amount:
-                    render("auctions/no_auction.html")
+                if bid.bid_amount < current_bid.bid_amount:
+                    return False
+            return True
 
-        else:
-            if bid.bid_amount >= starting_bid:
-                bid.auction = auction
-                bid.user = user
-                bid.save()
+        if check_start and check_current():
+            bid.auction = auction
+            bid.user = user
+            bid.save()
     
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
+
 
