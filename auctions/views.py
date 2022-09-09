@@ -107,7 +107,18 @@ def auction_view(request, pk):
     except:
         return render(request, "auctions/no_auction.html")
 
-    return render(request, "auctions/auction.html", {"auction": auction, "pk": pk, "bidform": BidForm()})
+    highest_bid = Bid.objects.filter(auction=auction).latest("bid_amount")
+
+    return render(
+        request,
+        "auctions/auction.html",
+        {
+            "auction": auction,
+            "pk": pk,
+            "bidform": BidForm(),
+            "highest_bid": highest_bid,
+        },
+    )
 
 
 class AuctionForm(ModelForm):
@@ -150,11 +161,12 @@ class BidForm(ModelForm):
     """
     Form: Make a bid
     """
+
     class Meta:
         model = Bid
         fields = ["bid_amount"]
 
-   
+
 def make_bid(request, pk):
     bidform = BidForm(request.POST)
 
@@ -166,6 +178,7 @@ def make_bid(request, pk):
         current_bids = Bid.objects.all().filter(auction=auction)
 
         check_start = bid.bid_amount >= starting_bid
+
         def check_current():
             for current_bid in current_bids:
                 if bid.bid_amount < current_bid.bid_amount:
@@ -176,8 +189,8 @@ def make_bid(request, pk):
             bid.auction = auction
             bid.user = user
             bid.save()
-    
+        else:
+            return render(request, "auctions/no_auction.html")
+
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
-
-
