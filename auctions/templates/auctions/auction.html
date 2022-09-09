@@ -7,8 +7,9 @@
 
 
 
-<form action="" method="POST">{% csrf_token%}
+<form action="{% url 'make_bid' auction.pk %}" method="POST">{% csrf_token%}
 {{ bidform.as_p }}
 <input type="submit">
 </form>
 {% endblock %}
+

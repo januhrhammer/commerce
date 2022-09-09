@@ -140,18 +140,42 @@ def new_listing(request):
         new_listing.save()
 
         url = reverse("auction", kwargs={"pk": new_listing.pk})
-        return HttpResponse(url)
+        return HttpResponseRedirect(url)
 
     else:
         return render(request, "auctions/new_listing.html", {"form": form})
 
 
 class BidForm(ModelForm):
+    """
+    Form: Make a bid
+    """
     class Meta:
         model = Bid
         fields = ["bid_amount"]
 
-# def bid_view(request, pk):
-#     form = BidForm(request.POST)
-#     if form.is_valid():
    
+def make_bid(request, pk):
+    bidform = BidForm(request.POST)
+
+    if bidform.is_valid():
+        auction = Listing.objects.get(pk=pk)
+        user = request.user
+        bid = bidform.save(commit=False)
+        starting_bid = auction.starting_price
+        current_bids = Bid.objects.filter(auction=auction)
+
+        if current_bids == True:
+            for current_bid in current_bids:
+                if bid.bid_amount <= current_bid.bid_amount:
+                    render("auctions/no_auction.html")
+
+        else:
+            if bid.bid_amount >= starting_bid:
+                bid.auction = auction
+                bid.user = user
+                bid.save()
+    
+    url = reverse("auction", kwargs={"pk": pk})
+    return HttpResponseRedirect(url)
+
