@@ -30,7 +30,7 @@ class Listing(models.Model):
 
 
 class Bid(models.Model):
-    bid_amount = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0.01)])
+    bid_amount = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0.01)], default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
     auction = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="bids")
 
