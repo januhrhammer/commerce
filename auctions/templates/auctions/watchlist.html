@@ -4,8 +4,8 @@
     <h2>{{ title }}</h2>
 
     {% for auction in auctions %}
-    <a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>
-    ${{ auction.starting_price }}
-<img src="{{auction.image.url}}" alt="">
+    <a href="/auction/{{ auction.auction.pk }}">{{ auction.auction.item_name }}</a>
+    ${{ auction.auction.starting_price }}
+<img src="{{auction.auction.image.url}}" alt="">
     {% endfor %}
 {% endblock %}
