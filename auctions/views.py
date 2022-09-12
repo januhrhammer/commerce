@@ -108,6 +108,7 @@ def auction_view(request, pk):
         return render(request, "auctions/no_auction.html")
 
     highest_bid = Bid.objects.filter(auction=auction).latest("bid_amount")
+    watchlist = Watchlist.objects.all().filter(user=request.user).filter(auction=auction)
 
     return render(
         request,
@@ -117,6 +118,7 @@ def auction_view(request, pk):
             "pk": pk,
             "bidform": BidForm(),
             "highest_bid": highest_bid,
+            "watchlist": watchlist,
         },
     )
 
@@ -168,6 +170,9 @@ class BidForm(ModelForm):
 
 
 def make_bid(request, pk):
+    """
+    View: When BidForm gets submitted, check for valid bid and place it. Otherwise redirect to error page.
+    """
     bidform = BidForm(request.POST)
 
     if bidform.is_valid():
@@ -195,3 +200,34 @@ def make_bid(request, pk):
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
 
+
+def watchlist(request):
+    """
+    View: Renders the watchlist for logged in user.
+    """
+    user = request.user
+    auctions = Watchlist.objects.all().filter(user=user)
+    return render(
+        request, "auctions/watchlist.html", {"user": user, "auctions": auctions}
+    )
+
+
+def edit_watchlist(request, pk):
+    """
+    View: Adds or removes current auction to/from the watchlist.
+    """
+    if request.method == "POST":
+        auction = Listing.objects.get(pk=pk)
+        if (
+            Watchlist.objects.all()
+            .filter(user=request.user)
+            .filter(auction=auction)
+            .exists()
+            == False
+        ):
+            new_watchlist = Watchlist.objects.create(auction=auction, user=request.user)
+        else:
+            Watchlist.objects.filter(user=request.user).filter(auction=auction).delete()
+
+    url = reverse("auction", kwargs={"pk": pk})
+    return HttpResponseRedirect(url)

@@ -16,6 +16,14 @@ current price:
 </form>
 
 
+<form method="POST" action="{% url 'e_watchlist' auction.pk %}">
+    {% csrf_token%}
+    {% if auction in request.user.watchlists.all %}
+        <input type="submit" value="Remove from Watchlist" />
+    {% else %}
+        <input type="submit" value="Add to Watchlist" />
+    {% endif %}
+</form>
 
 {% endblock %}
 
