@@ -1,9 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+    <h2>{{ title }}</h2>
 
-{% for category in categories %}
-<a href="{% url 'category' category  %}">{{ category }}</a>
-{% endfor %}
-
+    {% for auction in auctions %}
+    <a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>
+    ${{ auction.starting_price }}
+<img src="{{auction.image.url}}" alt="">
+    {% endfor %}
 {% endblock %}
