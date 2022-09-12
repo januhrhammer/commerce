@@ -108,7 +108,8 @@ def auction_view(request, pk):
         return render(request, "auctions/no_auction.html")
 
     highest_bid = Bid.objects.filter(auction=auction).latest("bid_amount")
-    watchlist = Watchlist.objects.all().filter(user=request.user).filter(auction=auction)
+    watch_exists = Watchlist.objects.all().filter(auction=auction).filter(user=request.user).exists()
+
 
     return render(
         request,
@@ -118,7 +119,7 @@ def auction_view(request, pk):
             "pk": pk,
             "bidform": BidForm(),
             "highest_bid": highest_bid,
-            "watchlist": watchlist,
+            "exists": watch_exists,
         },
     )
 
