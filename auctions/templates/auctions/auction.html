@@ -20,6 +20,21 @@ starting price: {{ auction.starting_price }} current price: {{ highest_bid.bid_a
 <form method="POST" action="{% url 'close' auction.pk %}"> {% csrf_token %}
   <input type="submit" value="Close Auction" />
 </form>
-{% endif %} {% endblock %}
+{% endif %}
 
-<input type="text" />
+
+<form method="POST" action="{% url 'comment' auction.pk %}">
+{% csrf_token %}
+    {{ commentform }}
+    <input type="submit" value="Submit Comment">
+</form>
+
+
+
+{% for comment in all_comments %}
+{{ comment.user }} {{ comment.date }}
+{{ comment.comment }}
+
+{% endfor %}
+
+{% endblock %}

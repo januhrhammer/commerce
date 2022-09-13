@@ -1,10 +1,9 @@
-from typing import List
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from .models import User, Listing, Bid, Category, Comment, Watchlist
 
 
@@ -119,6 +118,8 @@ def auction_view(request, pk):
         .exists()
     )
 
+    all_comments = Comment.objects.all().filter(auction=auction).order_by("-date")
+
     return render(
         request,
         "auctions/auction.html",
@@ -128,6 +129,8 @@ def auction_view(request, pk):
             "bidform": BidForm(),
             "highest_bid": highest_bid,
             "exists": watch_exists,
+            "commentform": CommentForm(),
+            "all_comments": all_comments,
         },
     )
 
@@ -263,12 +266,18 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ["comment"]
+        widgets = {"comment": Textarea(attrs={"class": "comment-field"})}
+
 
 def make_comment(request, pk):
     comment_form = CommentForm(request.POST)
-
     if comment_form.is_valid():
         auction = Listing.objects.get(pk=pk)
         user = request.user
         comment = comment_form.save(commit=False)
-        
+        comment.user = user
+        comment.auction = auction
+        comment.save()
+
+    url = reverse("auction", kwargs={"pk": pk})
+    return HttpResponseRedirect(url)

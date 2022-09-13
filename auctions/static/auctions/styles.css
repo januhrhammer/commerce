@@ -1,3 +1,8 @@
 body {
     padding: 10px;
 }
+
+.comment-field {
+    color: red;
+    background-color: green;
+}

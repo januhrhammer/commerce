@@ -43,9 +43,9 @@ __DONE__: Display all details.
 __TODO__: Styling
 
 ## Listing Page:
-__DONE__: Add/Remove WL, Make a Bid. Closing an auction.
+__DONE__: Add/Remove WL, Make a Bid. Closing an auction. Commenting.
 
-__TODO__: Commenting functionality. Styling.
+__TODO__: Styling.
 
 ## Watchlist:
 __DONE__: Functionality
