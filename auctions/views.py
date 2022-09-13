@@ -111,7 +111,7 @@ def auction_view(request, pk):
         highest_bid = 0
     else:
         highest_bid = Bid.objects.filter(auction=auction).latest("bid_amount")
-    
+
     watch_exists = (
         Watchlist.objects.all()
         .filter(auction=auction)
@@ -238,5 +238,18 @@ def edit_watchlist(request, pk):
         else:
             Watchlist.objects.filter(user=request.user).filter(auction=auction).delete()
 
+    url = reverse("auction", kwargs={"pk": pk})
+    return HttpResponseRedirect(url)
+
+
+def close_listing(request, pk):
+    """
+    View: Closes a listed auction by setting its "active" attribute to False
+    """
+    if request.method == "POST":
+        auction = Listing.objects.get(pk=pk)
+        if request.user == auction.user:
+            auction.active = False
+            auction.save(update_fields=["active"])
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
