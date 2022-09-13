@@ -253,3 +253,22 @@ def close_listing(request, pk):
             auction.save(update_fields=["active"])
     url = reverse("auction", kwargs={"pk": pk})
     return HttpResponseRedirect(url)
+
+
+class CommentForm(ModelForm):
+    """
+    Form: Make a comment
+    """
+
+    class Meta:
+        model = Comment
+        fields = ["comment"]
+
+def make_comment(request, pk):
+    comment_form = CommentForm(request.POST)
+
+    if comment_form.is_valid():
+        auction = Listing.objects.get(pk=pk)
+        user = request.user
+        comment = comment_form.save(commit=False)
+        
