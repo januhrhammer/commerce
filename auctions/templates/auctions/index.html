@@ -4,22 +4,22 @@
 {% block body %}
 <h2>{{ title }}</h2>
 
-
-<div class="card-container"></div>
+<div class="card-container">
 {% for auction in auctions %}
-<div class="card" style="width: 18rem;">
-    <img src="{{auction.image.url}}" alt="" />
-    <div class="card-body">
-    <div class="card-title">{{ auction.item_name }}</div>
-    <div class="card-text">{{ auction.item_description }} <br> 
+
+<div class="auction-card">
+<img class="card-image" src="{{auction.image.url}}" alt="" />
+    <div class="card-content">
+    <div class="card-atitle">{{ auction.item_name }}</div>
+    <div class="card-adesc">{{ auction.item_description }} <br> 
         Starting Price: ${{ auction.starting_price }} <br> 
         Current Bid: ${{ auction.bids.last.bid_amount }}</div>
-    <a href="/auction/{{ auction.pk }}" class="btn btn-primary">Go To Auction</a>
+        <form action="/auction/{{ auction.pk }}">
+        <button class="auc-btn" type="submit">Go To Auction</button>
+        </form>
     </div>
 </div>
-
-{% endfor %} 
+{% endfor %}
 </div>
-{% endblock %}
 
-<a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>
+{% endblock %}
