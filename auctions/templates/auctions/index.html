@@ -1,11 +1,25 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout.html" %} 
+
 
 {% block body %}
-    <h2>{{ title }}</h2>
+<h2>{{ title }}</h2>
 
-    {% for auction in auctions %}
-    <a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>
-    ${{ auction.starting_price }}
-<img src="{{auction.image.url}}" alt="">
-    {% endfor %}
+
+<div class="card-container"></div>
+{% for auction in auctions %}
+<div class="card" style="width: 18rem;">
+    <img src="{{auction.image.url}}" alt="" />
+    <div class="card-body">
+    <div class="card-title">{{ auction.item_name }}</div>
+    <div class="card-text">{{ auction.item_description }} <br> 
+        Starting Price: ${{ auction.starting_price }} <br> 
+        Current Bid: ${{ auction.bids.last.bid_amount }}</div>
+    <a href="/auction/{{ auction.pk }}" class="btn btn-primary">Go To Auction</a>
+    </div>
+</div>
+
+{% endfor %} 
+</div>
 {% endblock %}
+
+<a href="/auction/{{ auction.pk }}">{{ auction.item_name }}</a>

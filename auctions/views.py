@@ -12,6 +12,7 @@ def index(request):
     View: Passing all active auctions to index.html
     """
     active_listings = Listing.objects.all().filter(active=True)
+    
     return render(
         request,
         "auctions/index.html",
@@ -270,6 +271,9 @@ class CommentForm(ModelForm):
 
 
 def make_comment(request, pk):
+    """
+    View: Saves a submitted comment
+    """
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         auction = Listing.objects.get(pk=pk)
