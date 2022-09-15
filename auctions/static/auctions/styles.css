@@ -1,70 +1,87 @@
 :root {
-    --general-font: "Inter", sans-serif;
-    --title-size: 65px;
-    --font-color: #c3dfe0;
+  --general-font: "Inter", sans-serif;
+  --title-size: 65px;
+  --font-color: #c3dfe0;
 }
 
-
 body {
-    padding: 20px;
-    font-family: var(--general-font);
-    color: var(--font-color);
-    background-color: #0a2342;
+  padding: 20px;
+  font-family: var(--general-font);
+  color: var(--font-color);
+  background-color: #0a2342;
 }
 
 h1 {
-    font-size: var(--title-size);
-    font-weight: 700;
-    text-align: center;
-    
+  font-size: var(--title-size);
+  font-weight: 700;
+  text-align: center;
 }
 
 h2 {
-    font-weight: 200;
+  font-weight: 200;
 }
 
 .nav-link {
-    color: var(--font-color);
-    text-decoration: none;
+  color: var(--font-color);
+  text-decoration: none;
 }
 
 .nav-link:hover {
-    color: white;
+  color: white;
 }
 
 .signed-text {
-    text-align: right;
+  text-align: right;
 }
 
 .card-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px;
-    row-gap: 20px;
-    align-content: flex-start;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  row-gap: 20px;
+  align-content: flex-start;
+  align-items: flex-start;
 }
 
 .card-image {
-    width: 14rem;
+  width: 14rem;
 }
 
 .auction-card {
-    width: 14rem;
+  width: 14rem;
 }
 
 .card-content {
-    background-color: #0c2b52;
+  background-color: #0c2b52;
+  border-width: 0 2px 2px 2px;
+  border-radius: 5px;
+  border-color: #c3dfe0;
+  border-style: solid;
+  padding: 10px;
 }
 
 .card-atitle {
-    color: white;
-    font-weight: 700;
+  color: white;
+  font-weight: 700;
 }
 
 .card-adesc {
-    color: white;
+  color: white;
+  font-size: 0.8rem;
 }
 
+.auc-btn {
+  background-color: #c3dfe0;
+  border: 0;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.auc-btn:hover {
+    background-color: white;
+    outline: 2px solid;
+    outline-color: black;
+}

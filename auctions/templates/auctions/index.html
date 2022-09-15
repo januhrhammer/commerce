@@ -10,10 +10,14 @@
 <div class="auction-card">
 <img class="card-image" src="{{auction.image.url}}" alt="" />
     <div class="card-content">
-    <div class="card-atitle">{{ auction.item_name }}</div>
-    <div class="card-adesc">{{ auction.item_description }} <br> 
-        Starting Price: ${{ auction.starting_price }} <br> 
-        Current Bid: ${{ auction.bids.last.bid_amount }}</div>
+    <div class="card-atitle">{{ auction.item_name }}</div> <br>
+    <div class="card-adesc"><em>{{ auction.item_description }}</em> <br><br>
+        Starting Price: ${{ auction.starting_price }} <br>
+        {% if auction.bids.last.bid_amount %}
+        Current Bid: ${{ auction.bids.last.bid_amount }}
+        {% else %}
+        Current Bid: No Bid
+         {% endif %} </div> 
         <form action="/auction/{{ auction.pk }}">
         <button class="auc-btn" type="submit">Go To Auction</button>
         </form>
