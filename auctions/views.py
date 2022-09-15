@@ -3,7 +3,8 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.forms import ModelForm, Textarea
+from django.forms import ModelForm, Textarea, NumberInput
+from django.utils.translation import gettext_lazy as _
 from .models import User, Listing, Bid, Category, Comment, Watchlist
 
 
@@ -180,6 +181,8 @@ class BidForm(ModelForm):
     class Meta:
         model = Bid
         fields = ["bid_amount"]
+        widgets = {"bid_amount": NumberInput(attrs={"class": "bid-field"})}
+        labels = {"bid_amount": _("")}
 
 
 def make_bid(request, pk):
@@ -268,7 +271,8 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ["comment"]
         widgets = {"comment": Textarea(attrs={"class": "comment-field"})}
-
+        labels = {"comment": _("")}
+    
 
 def make_comment(request, pk):
     """

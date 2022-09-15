@@ -1,24 +1,33 @@
 {% extends "auctions/layout.html" %} 
-{% block body %} 
-{{ auction.item_name }}
-starting price: {{ auction.starting_price }} current price: {{ highest_bid.bid_amount }}
+{% block body %}
+
+<h2>{{ auction.item_name }}</h2>
+
+<img src="{{auction.image.url}}" alt="" class="auction-image">
+Description: {{ auction.item_description }}
+Starting Price: ${{ auction.starting_price }} 
+{% if auction.bids.last.bid_amount %}
+  Current Bid: ${{ auction.bids.last.bid_amount }}
+{% else %}
+  Current Bid: No Bid
+{% endif %}
 
 <form action="{% url 'make_bid' auction.pk %}" method="POST">
   {% csrf_token %} {{ bidform.as_p }}
-  <input type="submit" />
+  <input class="auc-btn" type="submit" value="Make Bid" />
 </form>
 
 <form method="POST" action="{% url 'e_watchlist' auction.pk %}">
   {% csrf_token %} {% if exists %}
   <input type="submit" value="Remove from Watchlist" />
   {% else %}
-  <input type="submit" value="Add to Watchlist" />
+  <input class="auc-btn" type="submit" value="Add to Watchlist" />
   {% endif %}
 </form>
 
 {% if request.user == auction.user and auction.active == True %}
 <form method="POST" action="{% url 'close' auction.pk %}"> {% csrf_token %}
-  <input type="submit" value="Close Auction" />
+  <input class="auc-btn" type="submit" value="Close Auction" />
 </form>
 {% endif %}
 
@@ -26,7 +35,7 @@ starting price: {{ auction.starting_price }} current price: {{ highest_bid.bid_a
 <form method="POST" action="{% url 'comment' auction.pk %}">
 {% csrf_token %}
     {{ commentform }}
-    <input type="submit" value="Submit Comment">
+    <input class="auc-btn" type="submit" value="Submit Comment" style="display: block">
 </form>
 
 
