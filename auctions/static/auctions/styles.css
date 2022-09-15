@@ -5,10 +5,14 @@
 }
 
 body {
-  padding: 20px;
+  padding: 30px;
   font-family: var(--general-font);
   color: var(--font-color);
   background-color: #0a2342;
+}
+
+hr {
+  margin-bottom: 40px;
 }
 
 h1 {
@@ -93,10 +97,11 @@ h2 {
 }
 
 .bid-field {
-    color: white;
+    color: black;
+    width: 120px;
 }
 
 .auction-image {
-    margin: 20px;
-    border: 5px solid black;
+    margin-bottom: 20px;
+    max-width: 250px;
 }
