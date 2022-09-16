@@ -3,19 +3,16 @@
 
 <h2>{{ auction.item_name }}</h2>
 
+<div class="auction-display">
 <img src="{{auction.image.url}}" alt="" class="auction-image">
-Description: {{ auction.item_description }}
-Starting Price: ${{ auction.starting_price }} 
+<div class="auction-details">
+Description: <br> {{ auction.item_description }} <br> <br>
+Starting Price: ${{ auction.starting_price }} <br>
 {% if auction.bids.last.bid_amount %}
   Current Bid: ${{ auction.bids.last.bid_amount }}
 {% else %}
   Current Bid: No Bid
 {% endif %}
-
-<form action="{% url 'make_bid' auction.pk %}" method="POST">
-  {% csrf_token %} {{ bidform.as_p }}
-  <input class="auc-btn" type="submit" value="Make Bid" />
-</form>
 
 <form method="POST" action="{% url 'e_watchlist' auction.pk %}">
   {% csrf_token %} {% if exists %}
@@ -30,6 +27,17 @@ Starting Price: ${{ auction.starting_price }}
   <input class="auc-btn" type="submit" value="Close Auction" />
 </form>
 {% endif %}
+</div>
+</div>
+
+
+<form action="{% url 'make_bid' auction.pk %}" method="POST">
+  {% csrf_token %} {{ bidform.as_p }}
+  <input class="auc-btn" type="submit" value="Make Bid" />
+</form>
+
+
+
 
 
 <form method="POST" action="{% url 'comment' auction.pk %}">
