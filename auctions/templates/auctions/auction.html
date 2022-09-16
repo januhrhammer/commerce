@@ -6,17 +6,18 @@
 <div class="auction-display">
 <img src="{{auction.image.url}}" alt="" class="auction-image">
 <div class="auction-details">
-Description: <br> {{ auction.item_description }} <br> <br>
-Starting Price: ${{ auction.starting_price }} <br>
+Listed by: <strong>{{ auction.user }}</strong> <br>
+<strong>Description:</strong> <br> {{ auction.item_description }} <br> <br>
+<strong>Starting Price:</strong> ${{ auction.starting_price }} <br>
 {% if auction.bids.last.bid_amount %}
-  Current Bid: ${{ auction.bids.last.bid_amount }}
+  <strong>Current Bid:</strong> ${{ auction.bids.last.bid_amount }}
 {% else %}
-  Current Bid: No Bid
+  <strong>Current Bid: No Bid</strong>
 {% endif %}
 
 <form method="POST" action="{% url 'e_watchlist' auction.pk %}">
   {% csrf_token %} {% if exists %}
-  <input type="submit" value="Remove from Watchlist" />
+  <input class="auc-btn" type="submit" value="Remove from Watchlist" />
   {% else %}
   <input class="auc-btn" type="submit" value="Add to Watchlist" />
   {% endif %}
@@ -26,16 +27,20 @@ Starting Price: ${{ auction.starting_price }} <br>
 <form method="POST" action="{% url 'close' auction.pk %}"> {% csrf_token %}
   <input class="auc-btn" type="submit" value="Close Auction" />
 </form>
+{% else %}
+<h3>Auction is closed!</h3>
 {% endif %}
 </div>
 </div>
 
 
+<div class="bid-quantity">{{ auction.bids.count }} bid(s) have been placed.</div> 
+{% if request.user != auction.user and auction.active == True %}
 <form action="{% url 'make_bid' auction.pk %}" method="POST">
-  {% csrf_token %} {{ bidform.as_p }}
+  {% csrf_token %} ${{ bidform.as_div }}
   <input class="auc-btn" type="submit" value="Make Bid" />
 </form>
-
+{% endif %}
 
 
 
@@ -49,9 +54,10 @@ Starting Price: ${{ auction.starting_price }} <br>
 
 
 {% for comment in all_comments %}
-{{ comment.user }} {{ comment.date }}
-{{ comment.comment }}
-
+<div class="comment-container">
+<div class="comment-details">By <strong>{{ comment.user }}</strong>, on <strong>{{ comment.date }} UTC</strong></div>
+<div class="comment-content">{{ comment.comment }}</div>
+</div>
 {% endfor %}
 
 {% endblock %}

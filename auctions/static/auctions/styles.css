@@ -87,13 +87,21 @@ h2 {
 }
 
 .auc-btn:hover {
-    background-color: white;
+    background-color: transparent;
     outline: 2px solid;
-    outline-color: black;
+    outline-color: #c3dfe0;
+    color: white;
 }
 
 .comment-field {
     background-color: beige;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 5px;
+    max-width: 350px;
+}
+.comment-field:focus {
+  outline: none;
 }
 
 .bid-field {
@@ -114,4 +122,17 @@ h2 {
 
 .auction-details {
   max-width: 48ch;
+}
+
+.comment-container {
+  max-width: 350px;
+  margin: 20px 0 10px;
+  background-color: #0c2b52;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.comment-details {
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.582);
+  margin-bottom: 10px;
 }
