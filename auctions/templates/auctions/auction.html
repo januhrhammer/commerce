@@ -28,7 +28,9 @@ Listed by: <strong>{{ auction.user }}</strong> <br>
   <input class="auc-btn" type="submit" value="Close Auction" />
 </form>
 {% else %}
-<h3>Auction is closed!</h3>
+<h3>Auction is closed.</h3>
+<br>
+<h3>🎉 <strong>{{ auction.bids.last.user }}</strong> has won the auction! 🎉</h3>
 {% endif %}
 </div>
 </div>
