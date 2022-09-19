@@ -1,11 +1,32 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2></h2>
 
+<h2>Category: <strong>{{ category }}</strong></h2>
+<div class="card-container">
     {% for auction in auctions %}
-    {{ auction.item_name }}
-    ${{ auction.starting_price }}
-<img src="{{auction.image.url}}" alt="">
+    
+    <div class="auction-card">
+    {% if auction.image_url != "" %}
+    <img class="card-image" src="{{auction.image_url}}" alt="" />
+    {% else %}
+    <img class="card-image" src="{{auction.image.url}}" alt="" />
+    {% endif %}
+        <div class="card-content">
+        <div class="card-atitle">{{ auction.item_name }}</div> <br>
+        <div class="card-adesc"><em>{{ auction.item_description }}</em> <br><br>
+            Starting Price: ${{ auction.starting_price }} <br>
+            {% if auction.bids.last.bid_amount %}
+            Current Bid: ${{ auction.bids.last.bid_amount }}
+            {% else %}
+            Current Bid: No Bid
+             {% endif %} </div> 
+            <form action="/auction/{{ auction.pk }}">
+            <button class="auc-btn" type="submit">Go To Auction</button>
+            </form>
+        </div>
+    </div>
     {% endfor %}
+    </div>
+
 {% endblock %}

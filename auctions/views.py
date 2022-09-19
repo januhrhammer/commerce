@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.forms import ModelForm, Textarea, NumberInput
+from django.forms import ModelForm, Textarea, NumberInput, TextInput, Select, FileInput
 from django.utils.translation import gettext_lazy as _
 from .models import User, Listing, Bid, Category, Comment, Watchlist
 
@@ -13,7 +13,7 @@ def index(request):
     View: Passing all active auctions to index.html
     """
     active_listings = Listing.objects.all().filter(active=True)
-    
+
     return render(
         request,
         "auctions/index.html",
@@ -152,6 +152,14 @@ class AuctionForm(ModelForm):
             "image_url",
             "category",
         ]
+        widgets = {
+            "item_name": TextInput(attrs={"class": "itemname-field"}),
+            "item_description": Textarea(attrs={"class": "itemdesc-field"}),
+            "starting_price": NumberInput(attrs={"class": "price-field", "step": 0.25}),
+            "image": FileInput(attrs={"class": "imgupload-field"}),
+            "image_url": TextInput(attrs={"class": "imgurl_field"}),
+            "category": Select(attrs={"class": "category-field"})
+        }
 
 
 def new_listing(request):
@@ -181,7 +189,7 @@ class BidForm(ModelForm):
     class Meta:
         model = Bid
         fields = ["bid_amount"]
-        widgets = {"bid_amount": NumberInput(attrs={"class": "bid-field"})}
+        widgets = {"bid_amount": NumberInput(attrs={"class": "bid-field", "step": 0.25})}
         labels = {"bid_amount": _("")}
 
 
@@ -272,7 +280,7 @@ class CommentForm(ModelForm):
         fields = ["comment"]
         widgets = {"comment": Textarea(attrs={"class": "comment-field"})}
         labels = {"comment": _("")}
-    
+
 
 def make_comment(request, pk):
     """

@@ -8,7 +8,11 @@
 {% for auction in auctions %}
 
 <div class="auction-card">
+{% if auction.image_url != "" %}
+<img class="card-image" src="{{auction.image_url}}" alt="" />
+{% else %}
 <img class="card-image" src="{{auction.image.url}}" alt="" />
+{% endif %}
     <div class="card-content">
     <div class="card-atitle">{{ auction.item_name }}</div> <br>
     <div class="card-adesc"><em>{{ auction.item_description }}</em> <br><br>

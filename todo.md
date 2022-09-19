@@ -28,6 +28,7 @@ Admin should be able to view, add, edit, delete any Listings, Comments and Bids.
 ---
 
 ## General:
+__TODO__: Create Auction Form Styling
 
 ## Models:
 __DONE__: User + Listings, Bids, Comments + Watchlist
@@ -35,27 +36,27 @@ __DONE__: User + Listings, Bids, Comments + Watchlist
 ## Create Listing:
 __DONE__: Creating the Listing.
  
-__TODO__: Styling
+__TODO__: Styling, Form styling
 
 ## Active Listings Page:
 __DONE__: Display all details. 
 
-__TODO__: Styling
+__TODO__: 
 
 ## Listing Page:
 __DONE__: Add/Remove WL, Make a Bid. Closing an auction. Commenting.
 
-__TODO__: Styling.
+__TODO__:
 
 ## Watchlist:
 __DONE__: Functionality
 
-__TODO__: Styling
+__TODO__: 
 
 ## Categories:
 __DONE__: Functionality
 
-__TODO__: Styling
+__TODO__:
 
 ## DAI
 __DONE__: Functionality

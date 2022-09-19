@@ -51,6 +51,8 @@ h2 {
 
 .card-image {
   width: 14rem;
+  border: 2px solid #c3dfe0;
+  border-radius: 5px;
 }
 
 .auction-card {
@@ -107,11 +109,18 @@ h2 {
 .bid-field {
     color: black;
     width: 120px;
+    background-color: beige;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.bid-field:focus {
+  outline: none;
 }
 
 .auction-image {
     margin-bottom: 20px;
-    max-width: 250px;
+    width: 16rem;
 }
 
 .auction-display {
@@ -135,4 +144,71 @@ h2 {
 .comment-details {
   border-bottom: 1px dotted rgba(255, 255, 255, 0.582);
   margin-bottom: 10px;
+}
+
+.category-link a {
+  text-decoration: none;
+  color: #c3dfe0;
+}
+
+#id_item_name {
+  background-color: beige;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+#id_item_description {
+  background-color: beige;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+  vertical-align: middle;
+}
+
+#id_starting_price {
+  background-color: beige;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+
+#id_image_url {
+  background-color: beige;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+#id_category {
+  background-color: beige;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+}
+
+#id_item_name:focus, #id_item_description:focus, #id_starting_price:focus, #id_image_url:focus {
+  outline: none;
+}
+
+
+input[type="file"]::file-selector-button {
+  background-color: #c3dfe0;
+  border: 0;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 0.95rem;
+  margin: 10px 10px 10px 2px;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: transparent;
+    outline: 2px solid;
+    outline-color: #c3dfe0;
+    color: white;
+}
+
+.descrip-label {
+  vertical-align: middle;
 }

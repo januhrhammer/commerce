@@ -4,7 +4,11 @@
 <h2>{{ auction.item_name }}</h2>
 
 <div class="auction-display">
+{% if auction.image_url != "" %}
+<img src="{{auction.image_url}}" alt="" class="auction-image">
+{% else %}
 <img src="{{auction.image.url}}" alt="" class="auction-image">
+{% endif %}
 <div class="auction-details">
 Listed by: <strong>{{ auction.user }}</strong> <br>
 <strong>Description:</strong> <br> {{ auction.item_description }} <br> <br>
@@ -27,7 +31,7 @@ Listed by: <strong>{{ auction.user }}</strong> <br>
 <form method="POST" action="{% url 'close' auction.pk %}"> {% csrf_token %}
   <input class="auc-btn" type="submit" value="Close Auction" />
 </form>
-{% else %}
+{% elif auction.active == False %}
 <h3>Auction is closed.</h3>
 <br>
 <h3>🎉 <strong>{{ auction.bids.last.user }}</strong> has won the auction! 🎉</h3>
@@ -39,7 +43,8 @@ Listed by: <strong>{{ auction.user }}</strong> <br>
 <div class="bid-quantity">{{ auction.bids.count }} bid(s) have been placed.</div> 
 {% if request.user != auction.user and auction.active == True %}
 <form action="{% url 'make_bid' auction.pk %}" method="POST">
-  {% csrf_token %} ${{ bidform.as_div }}
+  {% csrf_token %} {{ bidform }}
+  <label for="id_bid_amount">$</label> <br>
   <input class="auc-btn" type="submit" value="Make Bid" />
 </form>
 {% endif %}

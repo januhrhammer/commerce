@@ -1,13 +1,30 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<h2>Create Auction</h2>
+
 
 <form method="POST">{% csrf_token %}
-{{ form.as_table }}
 
-<input type="submit">
+<label for="id_item_name" style="width: 6rem">Item Name</label>
+{{ form.item_name }} <br>
+
+<label for="id_item_description" style="width: 6rem">Item Description</label>
+{{ form.item_description }} <br>
+
+<label for="id_starting_price" style="width: 6rem">Starting Price in $</label>
+{{ form.starting_price }} <br>
+
+<label for="id_image" style="width: 6rem">Image Upload*</label>
+{{ form.image }} <br>
+<label for="id_image_url" style="width: 6rem">Image URL*</label>
+{{ form.image_url }} <br>
+<label for="id_category" style="width: 6rem">Category</label>
+{{ form.category }} <br>
+
+<input class="auc-btn" value="Submit" type="submit">
 </form>
 
-
+*Optional
 
 {% endblock %}
